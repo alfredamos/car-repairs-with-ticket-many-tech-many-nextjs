@@ -3,7 +3,6 @@ import {validateWithZodSchema} from "@/shared/zodSchema.validation";
 import {signupUserSchema} from "@/shared/auth.validation";
 import {authService} from "@/services/authService.service";
 import catchError, {HttpError} from "http-errors";
-import {StatusCodes} from "http-status-codes";
 
 export async function POST(request: NextRequest){
     try {

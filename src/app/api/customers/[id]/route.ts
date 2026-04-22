@@ -2,6 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {customerService} from "@/services/customer.service";
 import {validateWithZodSchema} from "@/shared/zodSchema.validation";
 import {customerEditSchema} from "@/shared/customer.validation";
+import catchError, {HttpError} from "http-errors";
 
 export async function DELETE(_request:NextRequest, {params}:{params: Promise<{id: string}>}){
     try {
@@ -14,9 +15,9 @@ export async function DELETE(_request:NextRequest, {params}:{params: Promise<{id
         //----> Send back response.
         return NextResponse.json(response);
     }catch (err){
-
+        const error = err as HttpError;
+        throw catchError(error?.statusCode, error?.message);
     }
-
 }
 
 export async function GET(_request:NextRequest, {params}:{params: Promise<{id: string}>}){
@@ -30,9 +31,9 @@ export async function GET(_request:NextRequest, {params}:{params: Promise<{id: s
         //----> Send back response.
         return NextResponse.json(response);
     }catch (err){
-
+        const error = err as HttpError;
+        throw catchError(error?.statusCode, error?.message);
     }
-
 }
 
 export async function PATCH(request:NextRequest, {params}:{params: Promise<{id: string}>}){
@@ -49,7 +50,7 @@ export async function PATCH(request:NextRequest, {params}:{params: Promise<{id: 
         //----> Send back response.
         return NextResponse.json(response);
     }catch (err){
-
+        const error = err as HttpError;
+        throw catchError(error?.statusCode, error?.message);
     }
-
 }
