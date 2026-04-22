@@ -7,11 +7,11 @@ dotenv.config({override: true,quiet: true});
 
 function adapterParameters(){
     return {
-        user: process.env.USER,
-        password: process.env.PASSWORD,
-        host: process.env.HOST,
-        port: process.env.MYSQL_PORT,
-        database: process.env.DATABASE,
+        user: process.env.USER as string,
+        password: process.env.PASSWORD as string,
+        host: process.env.HOST as string,
+        port: process.env.MYSQL_PORT as string,
+        database: process.env.DATABASE as string,
         connectionLimit: parseInt(process.env.CONNECTION_LIMIT as string),
         connectTimeout: parseInt(process.env.CONNECT_TIMEOUT as string),
 

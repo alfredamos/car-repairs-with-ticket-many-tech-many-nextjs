@@ -1,4 +1,4 @@
-import {Status} from "../app/generated/prisma/enums";
+import {Status} from "@/generated/prisma/enums";
 import {TicketWithCustomer} from "./ticketWithCustomer";
 import {TechnicianWithUser} from "./technicianWithUser";
 

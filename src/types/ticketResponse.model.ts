@@ -1,4 +1,4 @@
-import {TicketWithCustomer} from "~~/types/ticketWithCustomer";
+import {TicketWithCustomer} from "@/types/ticketWithCustomer";
 
 export class TicketResponse {
     id: string = "";

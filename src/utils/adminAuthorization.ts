@@ -1,10 +1,8 @@
-import {H3Event} from "h3";
-import {authService} from "#server/services/auth.service";
+import {authService} from "@/services/authService.service";
 
-export function isAdminAuthorization(event: H3Event): boolean{
-    console.log("Inside admin Authorization");
+export async function isAdminAuthorization(){
     //----> Get user session.
-    const session = authService.getUserSession(event);
+    const session = await authService.getUserSession();
 
     //----> Check for admin privilege.
     return session?.isAdmin;

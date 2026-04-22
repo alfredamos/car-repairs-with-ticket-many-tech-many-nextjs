@@ -1,5 +1,5 @@
-import {JwtPayload} from "~~/types/jwtPayload.model";
-import {Role, UserType} from "~/generated/prisma/enums";
+import {JwtPayload} from "@/types/jwtPayload.model";
+import {Role, UserType} from "@/generated/prisma/enums";
 
 export const emptyJwtPayload : JwtPayload = {
     id: "",

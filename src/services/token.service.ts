@@ -39,4 +39,4 @@ class TokenService implements ITokenService {
 
 }
 
-export const tokenService = new TokenService();
+export const tokenService = new TokenService() as ITokenService;

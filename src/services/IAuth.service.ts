@@ -1,6 +1,5 @@
 import {ChangeUserPassword, ChangeUserRole, EditUserProfile, LoginUser, SignupUser} from "@/shared/auth.validation";
 import {ResponseMessage} from "@/utils/responseMessage";
-import {Request} from "express"
 import {UserSession} from "@/types/UserSession.model";
 import {UserDto} from "@/types/userDto.model";
 

@@ -1,4 +1,4 @@
-import {Status} from "~/generated/prisma/enums";
+import {Status} from "@/generated/prisma/enums";
 
 export class TicketResp {
     id: string = "";

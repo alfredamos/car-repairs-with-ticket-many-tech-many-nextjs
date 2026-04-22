@@ -1,4 +1,4 @@
-import {Gender, Role, UserType} from "~/generated/prisma/enums"
+import {Gender, Role, UserType} from "@/generated/prisma/enums"
 
 export class User{
   id: string = "";

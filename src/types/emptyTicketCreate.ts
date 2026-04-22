@@ -1,9 +1,7 @@
-import type {TicketCreate} from "#shared/ticket.validation";
+import type {TicketCreate} from "@/shared/ticket.validation";
 
 export const emptyTicketCreate: TicketCreate = {
     title: "",
-    notes: "",
-    tech: "",
+    description: "",
     customerId: "",
-    completed: false,
 }

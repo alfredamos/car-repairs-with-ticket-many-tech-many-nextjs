@@ -1,5 +1,5 @@
-import {Role, Gender, UserType} from "~/generated/prisma/enums";
-import type {User} from "~/generated/prisma/client";
+import {Role, Gender, UserType} from "@/generated/prisma/enums";
+import type {User} from "@/generated/prisma/client";
 
 export class UserDto {
     id: string = "";

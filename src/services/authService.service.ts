@@ -2,7 +2,6 @@ import {IAuthService} from "@/services/IAuth.service";
 import {ChangeUserPassword, ChangeUserRole, EditUserProfile, LoginUser, SignupUser} from "@/shared/auth.validation";
 import {UserSession} from "@/types/UserSession.model";
 import {ResponseMessage} from "@/utils/responseMessage";
-import {Request} from "express";
 import {StatusCodes} from "http-status-codes";
 import {prisma} from "@/app/db/prisma.db";
 import catchError from "http-errors";
@@ -33,7 +32,7 @@ class AuthService implements IAuthService {
 
         //----> Check for valid password
         if (await this.passwordNotValid(request.password, user.password)) throw catchError(StatusCodes.UNAUTHORIZED, "Invalid credentials!");
-
+ 
         //----> Hash password.
         const hashedPassword = await bcrypt.hash(request.newPassword, 12);
 
@@ -89,7 +88,7 @@ class AuthService implements IAuthService {
         if (!session) throw catchError(StatusCodes.UNAUTHORIZED, "You are not logged in!");
 
         //----> Get the current user.
-        const user = await prisma.user.findUnique({where: {id: session.id}});
+        const user = await this.getUserByEmail(session.email)
 
         //----> Send back response.
         return fromUserToUserDto(user);
@@ -97,7 +96,7 @@ class AuthService implements IAuthService {
 
     async getUserSession(): Promise<UserSession> {
         //----> Get the accessToken from the cookie.
-        const accessToken = await this.getCookie(AuthParam.accessTokenName);
+        const accessToken = await this.getCookie(CookieParam.accessTokenName);
 
         //----> Validate access-token.
         const jwtPayload = this.validateToken(accessToken) as JwtPayload;
@@ -123,16 +122,19 @@ class AuthService implements IAuthService {
         const tokenJwt = this.makeTokenJwtFromUser(user);
 
         //----> Generate tokens and store in cookies.
-        return this.generateTokensAndCookie(tokenJwt);
+        return await this.generateTokensAndCookie(tokenJwt);
     }
 
     async logoutUser(): Promise<UserSession> {
+        //----> Get the user session.
+        const session = await this.getUserSession();
+
         //----> Delete all cookies.
         await this.deleteCookie(CookieParam.accessTokenName, CookieParam.accessTokenPath);
         await this.deleteCookie(CookieParam.refreshTokenName, CookieParam.refreshTokenPath);
 
-        //----> Get the user session.
-        const session = await this.getUserSession();
+        //----> Check for null session.
+        if (!session?.isLoggedIn) throw catchError(StatusCodes.UNAUTHORIZED, "You have already logged out!")
 
         //----> Revoke all invalid token objects.
         await tokenService.revokeAllValidTokensByUserId(session.id);
@@ -218,10 +220,10 @@ class AuthService implements IAuthService {
 
     private async getCookie(cookieName: string){
         const cookieStore = await cookies()
-        const cookie = cookieStore.get(cookieName)
+        const token = cookieStore.get(cookieName)?.value
 
         //----> Return the cookie value.
-        return cookie?.value || "";
+        return token || "";
     }
 
     private async setCookie(cookieName: string, cookieValue: string, cookiePath: string, maxAge: number){
@@ -303,4 +305,4 @@ class AuthService implements IAuthService {
 
 }
 
-export const authService = new AuthService();
+export const authService = new AuthService() as IAuthService;
