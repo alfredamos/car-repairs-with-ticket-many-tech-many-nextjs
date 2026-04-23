@@ -15,4 +15,6 @@ export interface IAssignedTicketService{
     getAssignedTicketsByTechId(techId: string): Promise<AssignedTicketResponse[]>;
     getAssignedTicketsByTicketId(ticketId: string): Promise<AssignedTicketResponse[]>;
     getAssignedTicketsByStatus(status: Status): Promise<AssignedTicketResponse[]>;
+    getCompletedAssignedTickets(): Promise<AssignedTicketResponse[]>;
+    getIncompletedAssignedTickets(): Promise<AssignedTicketResponse[]>;
 }

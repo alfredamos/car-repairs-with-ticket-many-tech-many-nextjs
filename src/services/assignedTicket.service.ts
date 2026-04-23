@@ -97,6 +97,22 @@ class AssignedTicketService implements IAssignedTicketService {
         return assignedTickets?.map(ticket => toAssignedTicketResponse(ticket as AssignedTicketRequest));
     }
 
+    async getCompletedAssignedTickets(): Promise<AssignedTicketResponse[]> {
+        //----> Fetch all assigned tickets.
+        const assignedTickets = await prisma.assignedTicket.findMany({where: {completed: true}});
+
+        //----> Send back response.
+        return assignedTickets?.map(ticket => toAssignedTicketResponse(ticket as AssignedTicketRequest));
+    }
+
+    async getIncompletedAssignedTickets(): Promise<AssignedTicketResponse[]> {
+        //----> Fetch all assigned tickets.
+        const assignedTickets = await prisma.assignedTicket.findMany({where: {completed: false}});
+
+        //----> Send back response.
+        return assignedTickets?.map(ticket => toAssignedTicketResponse(ticket as AssignedTicketRequest));
+    }
+
     private async getOneAssignedTicket(techId: string, ticketId: string){
         //----> Fetch the assigned ticket.
         const assignedTicket = await prisma.assignedTicket.findUnique({where: {techId_ticketId: {ticketId, techId}}});
