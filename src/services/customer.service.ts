@@ -7,6 +7,20 @@ import catchError from "http-errors";
 import {StatusCodes} from "http-status-codes";
 
 class CustomerService implements ICustomerService {
+    async changeStatus(id: string): Promise<CustomerResponse> {
+        //----> Check for existence of customer.
+        const customer = await this.getOneCustomer(id);
+
+        //----> Change customer status.
+        const active = !customer.active;
+
+        //----> Update the customer details.
+        const updatedCustomer = await prisma.customer.update({where: {id}, data: {active}, include: {user: true}});
+
+        //----> Send back response.
+        return toCustomerResponse(updatedCustomer as CustomerWithUser);
+    }
+
     async createCustomer(request: CustomerUncheckedCreateInput): Promise<CustomerResponse> {
         //----> Insert new customer.
         const customer = await prisma.customer.create({data: {...request}, include: {user: true}});
