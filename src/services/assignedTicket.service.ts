@@ -25,7 +25,7 @@ class AssignedTicketService implements IAssignedTicketService {
 
         //----> Change the job status.
         const completed = !assignedTicket.completed;
-        const status = assignedTicket.completed ? Status.Closed : Status.Open;
+        const status = assignedTicket.completed ? Status.Open : Status.Closed;
 
         //----> Update the assigned ticket.
         const updatedAssignedTicket = await prisma.assignedTicket.update({where: {techId_ticketId: {techId, ticketId}}, data: {...assignedTicket, completed, status}});

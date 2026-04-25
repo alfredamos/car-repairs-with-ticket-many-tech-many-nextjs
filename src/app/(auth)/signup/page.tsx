@@ -1,5 +1,7 @@
-export default function SignupUserPage(){
+import SignupForm from "@/app/(auth)/signup/SignupForm";
+
+export default async function SignupPage(){
     return (
-        <div>Signup User Page!</div>
+        <SignupForm />
     );
 }

@@ -1,5 +1,9 @@
-export default function LoginUserPage(){
-    return(
-        <div>Login User Page!</div>
+import LoginForm from "@/app/(auth)/login/LoginForm";
+
+export default async function LoginPage(){
+
+
+    return (
+        <LoginForm/>
     );
 }

@@ -16,7 +16,7 @@ export class TechnicianResponse {
 export function toTechnicianResponse(technician: TechnicianWithUser): TechnicianResponse {
     return{
         id: technician?.id,
-        specialty: technician?.speciality,
+        specialty: technician?.specialty,
         userId: technician?.userId,
         name: technician?.user?.name,
         email: technician?.user?.email,
