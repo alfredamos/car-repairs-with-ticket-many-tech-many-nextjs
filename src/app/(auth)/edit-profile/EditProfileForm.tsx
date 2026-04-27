@@ -1,8 +1,8 @@
 "use client"
 
-import {editProfileUserSchema, EditUserProfile,} from "@/shared/auth.validation";
+import {editProfileUserSchema, EditUserProfile, SignupUser,} from "@/shared/auth.validation";
 import {redirect, useRouter} from "next/navigation";
-import {Gender, Role} from "@prisma/client";
+import {Gender, Role, UserType} from "@/generated/prisma/enums";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form} from "@/components/ui/form";
@@ -10,9 +10,9 @@ import {InputWithLabel} from "@/components/form-elements/InputWithLabel";
 import {SelectWithLabel} from "@/components/form-elements/SelectWithLabel";
 import {Button} from "@/components/ui/button";
 import {Separator} from "@/components/ui/separator";
-import { UserType } from "@/generated/prisma/enums";
 import {editUserProfile} from "@/app/actions/auth.action";
 import {User} from "@/generated/prisma/client";
+import {formattedDate} from "@/app/utils/formattedDate";
 
 type Props = {
     user: User;
@@ -25,11 +25,13 @@ export default function EditProfileForm({user}: Props) {
         redirect("/")
     }
 
+    console.log("In edit-profile-form, user : ", user);
+
     const defaultValues: EditUserProfile = {
         email: user?.email ?? "",
         password: "",
         name: user?.name ?? "",
-        dateOfBirth: user?.dateOfBirth.toString() ?? "",
+        dateOfBirth: formattedDate(new Date(user?.dateOfBirth)),
         phone: user?.phone ?? "",
         image: user?.image ?? "",
         role: user?.role ?? Role.User,
@@ -60,16 +62,20 @@ export default function EditProfileForm({user}: Props) {
 
                     <div className="flex flex-col">
                         <InputWithLabel<EditUserProfile> fieldTitle="Email" type="email" nameInSchema="email" className="mb-2 dark:text-white" readOnly/>
-                        <SelectWithLabel<EditUserProfile> fieldTitle="Gender" nameInSchema="gender" data={[{id: "Male", value: "Male"}, {id: "female", value: "Female"}]} className="mb-2 w-full dark:text-white"/>
+                        <InputWithLabel<EditUserProfile> fieldTitle="BirthDate" type="date" nameInSchema="dateOfBirth" className="mb-2 dark:text-white"/>
                         <InputWithLabel<EditUserProfile> fieldTitle="Image" type="text" nameInSchema="image" className="mb-2 dark:text-white" />
 
                     </div>
+
+                </div>
+                <div className="grid grid-row1-1 gap-4">
+                    <SelectWithLabel<EditUserProfile> fieldTitle="Gender" nameInSchema="gender" data={[{id: "Male", value: "Male"}, {id: "female", value: "Female"}]} className="mb-2 w-full dark:text-white"/>
                 </div>
                 <Separator className="mt-4"/>
                 <div className="flex flex-col md:flex-row items-center md:justify-between mt-6 gap-2">
-                    <Button type="button" size="sm" className="w-full md:w-1/4 mb-4" variant="back" onClick={() => router.back()}>Back</Button>
-                    <Button type="submit" size="sm" className="w-full md:w-1/4 mb-4" variant="indigo">Save</Button>
-                    <Button type="button" size="sm" className="w-full md:w-1/4 mb-4" variant="rose" onClick={() => form.reset(defaultValues)}>Reset</Button>
+                    <Button type="button" size="lg" className="w-full md:w-1/3 mb-4" variant="back" onClick={() => router.back()}>Back</Button>
+                    <Button type="submit" size="lg" className="w-full md:w-1/3 mb-4" variant="indigo">Save</Button>
+                    <Button type="button" size="lg" className="w-full md:w-1/3 mb-4" variant="rose" onClick={() => form.reset(defaultValues)}>Reset</Button>
                 </div>
 
             </form>

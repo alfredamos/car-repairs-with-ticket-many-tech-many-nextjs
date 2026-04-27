@@ -137,7 +137,7 @@ class AuthService implements IAuthService {
         if (!session?.isLoggedIn) throw catchError(StatusCodes.UNAUTHORIZED, "You have already logged out!")
 
         //----> Revoke all invalid token objects.
-        await tokenService.revokeAllValidTokensByUserId(session.id);
+        await tokenService.revokeAllValidTokensByUserId(session?.id);
 
         //----> Make user-session and send back response.
         return emptyUserSession;

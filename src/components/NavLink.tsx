@@ -46,11 +46,11 @@ export function NavLink({href, label}: Props) {
             {isNotRefresh ?
                 (
                     <DropdownMenuItem key={label}>
-                        <Link href={href} className="py-2 px-4 text-sm font-medium text-gray-600 bg-gray-100 rounded hover:bg-gray-200 transition duration-300 w-full">{label}</Link>
+                        <Link href={href} className="py-2 px-4 text-sm font-medium text-gray-600 dark:text-gray-900 bg-gray-100 rounded hover:bg-gray-600 dark:hover:text-black transition duration-300 w-full">{label}</Link>
                     </DropdownMenuItem>
                 ) : (
                     <DropdownMenuItem key={label}>
-                        <form action={refreshUserTokenAction} className="py-2 px-4 text-sm font-medium text-gray-600 bg-gray-100 rounded hover:bg-gray-200 transition duration-300 w-full">
+                        <form action={refreshUserTokenAction} className="py-2 px-4 text-sm font-medium text-gray-900 bg-gray-100 rounded hover:bg-gray-600 dark:hover:text-black transition duration-300 w-full">
                             <button type="submit">{label}</button>
                         </form>
                     </DropdownMenuItem>

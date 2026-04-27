@@ -9,6 +9,7 @@ import {
 import {authService} from "@/services/authService.service";
 import {ResponseMessage} from "@/utils/responseMessage";
 import catchError, {HttpError} from "http-errors";
+import {redirect} from "next/navigation";
 
 export async function changeUserPassword(data: ChangeUserPassword){
     try{
@@ -49,8 +50,10 @@ export async function loginUser(data: LoginUser){
 export async function logoutUser(){
     try {
         //----> Logout user and send back response.
-        return await authService.logoutUser();
+        await authService.logoutUser();
+        redirect("/login");
     }catch (err){
+        console.log("In logout-action, error : ", err);
         const error = err as HttpError;
         throw catchError(error?.statusCode, error?.message);
     }

@@ -49,17 +49,19 @@ export default function SignupForm() {
                         <InputWithLabel<SignupUser> fieldTitle="Name" type="text" nameInSchema="name" className="mb-2 dark:text-white"/>
                         <InputWithLabel<SignupUser> fieldTitle="Password" type="password" nameInSchema="password" className="mb-2 dark:text-white" />
                         <InputWithLabel<SignupUser> fieldTitle="Phone" type="password" nameInSchema="phone" className="mb-2 dark:text-white" />
+                        <SelectWithLabel<SignupUser> fieldTitle="Gender" nameInSchema="gender" data={[{id: "Male", value: "Male"}, {id: "Female", value: "Female"}]} className="mb-2 w-full dark:text-white"/>
                     </div>
 
                     <div className="flex flex-col">
                         <InputWithLabel<SignupUser> fieldTitle="Email" type="email" nameInSchema="email" className="mb-2 dark:text-white" />
                         <InputWithLabel<SignupUser> fieldTitle="Confirm Password" type="password" nameInSchema="confirmPassword" className="mb-2 dark:text-white" />
                         <InputWithLabel<SignupUser> fieldTitle="Image" type="text" nameInSchema="image" className="mb-2 dark:text-white" />
+                        <SelectWithLabel<SignupUser> fieldTitle="User Type" nameInSchema="userType" data={[{id: "Customer", value: "Customer"}, {id: "Technician", value: "Technician"}]} className="mb-2 w-full dark:text-white"/>
 
                     </div>
                     </div>
                 <div className="grid grid-cols-1 gap-4 md:colospan-2">
-                    <SelectWithLabel<SignupUser> fieldTitle="Gender" nameInSchema="gender" data={[{id: "Male", value: "Male"}, {id: "Female", value: "Female"}]} className="mb-2 w-full dark:text-white"/>
+                    <InputWithLabel<SignupUser> fieldTitle="Birthdate" type="text" nameInSchema="dateOfBirth" className="mb-2 dark:text-white" />
                 </div>
                 <Separator className="mt-4"/>
                 <div className="flex flex-col md:flex-row gap-2 mt-6">

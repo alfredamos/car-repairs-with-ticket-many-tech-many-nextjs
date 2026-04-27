@@ -41,7 +41,7 @@ const DropdownItem = ({ href, children}: DropdownItemProps) => {
         <>
             {isNotRefresh ? ( <Link
                 href={href}
-                className="block px-4 py-2 font-medium text-sm text-gray-700 hover:bg-gray-100"
+                className="block px-4 py-2 font-medium text-sm text-gray-700 hover:bg-gray-500"
             >
                 {children}
             </Link>

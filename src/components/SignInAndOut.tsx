@@ -1,25 +1,30 @@
 "use client"
 
 import {useAuthContext} from "@/hooks/useAuthContext";
-import {NavigationMenuItem, NavigationMenuLink, NavigationMenuList} from "@/components/ui/navigation-menu";
+import {NavigationMenuItem, NavigationMenuList} from "@/components/ui/navigation-menu";
 import {Button} from "@/components/ui/button";
-import {logoutUser} from "@/app/actions/auth.action";
 import {MenuDropdown} from "@/components/MenuDropdown";
 import {ModeToggle} from "@/components/theme-toggler";
 import Link from "next/link";
-import {useEffect, useState} from "react";
-import { LocalStorageParam } from "@/app/utils/localStorageParam";
-import { UserSession } from "@/types/UserSession.model";
-import { useLocalStore } from "@/hooks/useLocalStore";
-import { adminItems } from "@/app/utils/adminItems";
-import { getAllSettingItems } from "@/app/utils/settingItems";
+import {SubmitEvent, useEffect, useState} from "react";
+import {LocalStorageParam} from "@/app/utils/localStorageParam";
+import {UserSession} from "@/types/UserSession.model";
+import {useLocalStore} from "@/hooks/useLocalStore";
+import {adminItems} from "@/app/utils/adminItems";
+import {getAllSettingItems} from "@/app/utils/settingItems";
+import {redirect} from "next/navigation";
+import {useApiClient} from "@/hooks/useApiClient";
+import {Method} from "@/types/method.model";
+import {emptyUserSession} from "@/utils/emptyUserSession";
 
 export default function SignInAndOut() {
-    const {authSession} = useAuthContext();
+    const {authSession, setAuthSession} = useAuthContext();
     const {getLocalStore, removeLocalStore} = useLocalStore<UserSession>()
 
     const [isLoggedIn, setIsLoggedIn] = useState(authSession?.isLoggedIn ?? getLocalStore(LocalStorageParam.authKey)?.isLoggedIn);
     const [isAdmin, setIsAdmin] = useState(authSession?.isAdmin ?? getLocalStore(LocalStorageParam.authKey)?.isAdmin);
+
+    const {fetcher} = useApiClient();
 
     useEffect(() => {
         const refreshAuth = async () => {
@@ -31,9 +36,13 @@ export default function SignInAndOut() {
     }, [authSession, getLocalStore]);
 
 
-    const logoutUserAction = async () => {
+    const logoutUserAction = async (event: SubmitEvent<HTMLFormElement>) => {
+        event.preventDefault();
         removeLocalStore(LocalStorageParam.authKey);
-        await logoutUser()
+        setAuthSession(emptyUserSession);
+        await fetcher<UserSession>("/api/auth/logout", Method.POST);
+        redirect("/")
+
     }
 
     return (
@@ -45,11 +54,11 @@ export default function SignInAndOut() {
                   </NavigationMenuItem>) : ""}
 
                    <NavigationMenuItem className="hover:bg-black hover:text-white focus:outline-none gap-2 px-4 pt-1 pb-2 rounded-md">
-                       <MenuDropdown items={getAllSettingItems(authSession?.email as string, isAdmin)} title="Settings" subTitle="My Account" />
+                       <MenuDropdown items={getAllSettingItems(authSession?.id as string, isAdmin)} title="Settings" subTitle="My Account" />
 
                    </NavigationMenuItem>
                    <NavigationMenuItem>
-                       <form action={logoutUserAction}>
+                       <form onSubmit={(event) => logoutUserAction(event)}>
                             <Button variant="ghost" className="hover:bg-black hover:text-white" type="submit">
                                 Logout
                             </Button>

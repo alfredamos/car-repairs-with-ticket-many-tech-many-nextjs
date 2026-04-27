@@ -47,9 +47,9 @@ export default function ChangePasswordForm({email}: Props) {
                 <InputWithLabel<ChangeUserPassword> fieldTitle="Confirm Passord" type="password" nameInSchema="confirmPassword" className="mb-2 dark:text-white" />
                 <Separator className="mt-4"/>
                 <div className="flex flex-col md:flex-row items-center md:justify-between mt-6 gap-2">
-                    <Button type="button" size="sm" className="w-full md:w-1/4 mb-4" variant="back" onClick={() => router.back()}>Back</Button>
-                    <Button type="submit" size="sm" className="w-full md:w-1/4 mb-4" variant="indigo">Save</Button>
-                    <Button type="button" size="sm" className="w-full md:w-1/4 mb-4" variant="rose" onClick={() => form.reset(defaultValues)}>Reset</Button>
+                    <Button type="button" size="lg" className="w-full md:w-1/3 mb-4" variant="back" onClick={() => router.back()}>Back</Button>
+                    <Button type="submit" size="lg" className="w-full md:w-1/3 mb-4" variant="indigo">Save</Button>
+                    <Button type="button" size="lg" className="w-full md:w-1/3 mb-4" variant="rose" onClick={() => form.reset(defaultValues)}>Reset</Button>
                 </div>
 
             </form>

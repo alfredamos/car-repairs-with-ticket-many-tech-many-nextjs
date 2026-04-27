@@ -8,17 +8,15 @@ export const settingItems = [
     { href: '/edit-profile', label: 'Edit Profile' },
     { href: '/', label: 'Home' },
     { href: '/refresh', label: 'Refresh' },
-    { href: '/tickets', label: 'Tickets' },
+    { href: '/assign-tickets', label: 'Assign Tickets' },
 ];
 
-export function getAllSettingItems(email: string, isAdmin: boolean) {
+export function getAllSettingItems(id: string, isAdmin: boolean) {
     return settingItems.map(item => {
-        if ((item.href === "/tickets") && (item.label === "Tickets") && !isAdmin) {
-            //----> Encode email
-            const encodedEmail = encodeURIComponent(email);
+        if ((item.href === "/assign-tickets") && (item.label === "Assign Tickets") && !isAdmin) {
 
             return {
-                href: `/tickets/get-tickets-by-email/${encodedEmail}`,
+                href: `/assign-tickets/by-user-id/${id}`,
                 label: item.label,
 
             } ;
