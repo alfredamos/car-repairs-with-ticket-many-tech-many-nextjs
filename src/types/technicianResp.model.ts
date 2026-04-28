@@ -1,4 +1,4 @@
-import {Gender} from "@prisma/client";
+import {Gender} from "@/generated/prisma/client";
 import {TechnicianWithUser} from "./technicianWithUser";
 
 export class TechnicianResponse {

@@ -1,5 +1,5 @@
 import {CustomerWithUser} from "./customerWithUser.model";
-import {Gender} from "@prisma/client";
+import {Gender} from "@/generated/prisma/client";
 
 class User {
 }

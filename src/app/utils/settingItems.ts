@@ -13,8 +13,9 @@ export const settingItems = [
 
 export function getAllSettingItems(id: string, isAdmin: boolean) {
     return settingItems.map(item => {
-        if ((item.href === "/assign-tickets") && (item.label === "Assign Tickets") && !isAdmin) {
-
+        console.log("In get-all-settings, href : ", item.href, " , label : ", item.label)
+        if ((item.href === "/assign-tickets") && (item.label === "Assign Tickets")) {
+            console.log("In get-all-settings, userId : ", id)
             return {
                 href: `/assign-tickets/by-user-id/${id}`,
                 label: item.label,
