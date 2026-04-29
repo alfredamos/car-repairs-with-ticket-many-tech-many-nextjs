@@ -1,5 +1,11 @@
-export default function CustomerListPages(){
+import {getAllCustomers} from "@/app/actions/customer.action";
+import {CustomerTable} from "@/components/customers/CustomerTable";
+
+export default async function CustomerListPages(){
+    //----> Fetch customers from database.
+    const customers = await getAllCustomers();
+
     return (
-        <div>Customer List!</div>
+        <CustomerTable customers={customers}/>
     );
 }

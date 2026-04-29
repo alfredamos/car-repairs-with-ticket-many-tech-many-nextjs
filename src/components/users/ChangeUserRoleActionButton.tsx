@@ -17,7 +17,7 @@ export function ChangeUserRoleActionButton({ user }: Props) {
     const router = useRouter();
     const {fetcher} = useApiClient()
 
-    const completeAndUnCompleteAction = async () => {
+    const changeUserRoleAction = async () => {
         const changeUserRole : ChangeUserRole = {
             email: user.email,
         }
@@ -27,7 +27,7 @@ export function ChangeUserRoleActionButton({ user }: Props) {
     }
 
     return (
-        <Button variant="success" type="button" size="sm" className="m-2" onClick={completeAndUnCompleteAction}>
+        <Button variant="success" type="button" size="sm" className="m-2" onClick={changeUserRoleAction}>
                 {user.role === Role.User ? "User" : "Admin"}
         </Button>
     );

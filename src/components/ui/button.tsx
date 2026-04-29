@@ -22,6 +22,7 @@ const buttonVariants = cva(
         indigo: "py-2 px-4 border-2 border-indigo-900 hover:bg-indigo-900 hover:text-white text-indigo-900 font-bold rounded-lg",
         rose: "py-2 px-4 border-2 border-rose-900 hover:bg-rose-900 hover:text-white text-rose-900 font-bold rounded-lg",
         back: "py-2 border-2 border-yellow-900 px-4 hover:bg-yellow-900 hover:text-white text-yellow-900 font-bold rounded-lg",
+        edita: "py-2 border-2 border-gray-900 px-4 hover:bg-gray-900 hover:text-white dark:text-gray-500 dark:hover:text-white text-gray-900 font-bold rounded-lg",
         success: "py-2 border-2 border-green-900 px-4 hover:bg-green-900 hover:text-white text-green-900 font-bold rounded-lg"
       },
       size: {
