@@ -3,7 +3,6 @@
 import {useRouter} from "next/navigation";
 import {DeleteActionButton} from "@/app/utils/DeleteActionButton";
 import {useApiClient} from "@/hooks/useApiClient";
-import {UserDto} from "@/types/userDto.model";
 import {Method} from "@/types/method.model";
 
 type Props = {

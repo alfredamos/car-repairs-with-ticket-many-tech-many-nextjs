@@ -18,10 +18,8 @@ type Props = {
 export function CustomerEditCard({defaultValues}: Props) {
     const router = useRouter();
 
-    console.log("In customer-edit-card, defaultValues :", defaultValues)
-
     async function onSubmit(values: CustomerEdit) {
-        const customerResponse = await editCustomerById(values.id as string, values);
+        await editCustomerById(values.id as string, values);
 
         redirect("/")
     }

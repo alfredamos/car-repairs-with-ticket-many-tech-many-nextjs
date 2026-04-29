@@ -1,6 +1,5 @@
 import {CustomerCreate} from "@/shared/customer.validation";
 import {CustomerCreateCard} from "@/components/customers/CustomerCreateCard";
-import {UserDto} from "@/types/userDto.model";
 import {getAllUsers} from "@/app/actions/user.action";
 
 export default async function AddCustomerPage(){
