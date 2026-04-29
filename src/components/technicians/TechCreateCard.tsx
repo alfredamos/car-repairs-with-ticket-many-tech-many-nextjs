@@ -5,15 +5,12 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form} from "@/components/ui/form";
 import {Separator} from "@/components/ui/separator";
-import {TextAreaWithLabel} from "@/components/form-elements/TextAreaWithLabel";
 import {Button} from "@/components/ui/button";
 import {SelectWithLabel} from "@/components/form-elements/SelectWithLabel";
 import {UserDto} from "@/types/userDto.model";
 import {UserType} from "@/generated/prisma/enums";
-import {createCustomer} from "@/app/actions/customer.action";
 import {TechnicianCreate, technicianCreateSchema} from "@/shared/tech.validation";
 import {createTech} from "@/app/actions/tech.action";
-import {ChangeUserPassword} from "@/shared/auth.validation";
 import {InputWithLabel} from "@/components/form-elements/InputWithLabel";
 
 type Props = {
