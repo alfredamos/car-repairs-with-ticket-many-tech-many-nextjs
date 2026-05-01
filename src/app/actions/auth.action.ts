@@ -50,8 +50,8 @@ export async function loginUser(data: LoginUser){
 export async function logoutUser(){
     try {
         //----> Logout user and send back response.
-        await authService.logoutUser();
-        redirect("/login");
+        return await authService.logoutUser();
+
     }catch (err){
         const error = err as Error;
         throw new Error(error?.message, {cause: err});
