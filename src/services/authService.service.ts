@@ -157,7 +157,7 @@ class AuthService implements IAuthService {
         return this.generateTokensAndCookie(tokenJwt);
     }
 
-    async signupUser(request: SignupUser): Promise<ResponseMessage> {
+    async signupUser(request: SignupUser): Promise<UserDto> {
         //----> Check for passwords match.
         if(this.passwordsNotMatch(request.password, request.confirmPassword)) throw catchError(StatusCodes.BAD_REQUEST, "Passwords must match!");
 
@@ -172,10 +172,10 @@ class AuthService implements IAuthService {
         const userToCreate = fromSignupUserToUser(request);
 
         //----> Insert the new user in db.
-        await prisma.user.create({data: {...userToCreate}});
+        const newUser = await prisma.user.create({data: {...userToCreate}});
 
         //----> Send back response.
-        return new ResponseMessage("User has been created successfully!", "success", StatusCodes.CREATED);
+        return fromUserToUserDto(newUser)
 
     }
 

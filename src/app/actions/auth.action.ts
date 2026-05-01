@@ -81,10 +81,7 @@ export async function refreshUserToken(){
 export async function signupUser(data: SignupUser){
     try {
         //----> Signup new user.
-        const response = await authService.signupUser(data);
-
-        //----> Send back response.
-        return toResponseMessage(response)
+        return await authService.signupUser(data);
     }catch (err){
         const error = err as Error;
         throw new Error(error?.message, {cause: err});

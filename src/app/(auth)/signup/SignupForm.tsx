@@ -14,8 +14,8 @@ import {Gender, Role, UserType} from "@/generated/prisma/enums";
 
 export default function SignupForm() {
     async function onSubmit(values: SignupUser) {
-        await signupUser(values);
-        redirect("/")
+        const newUser = await signupUser(values);
+        redirect(newUser.userType === UserType.Customer ? `/customers/` : "/admin/login")
     }
 
     const defaultValues: SignupUser = {
