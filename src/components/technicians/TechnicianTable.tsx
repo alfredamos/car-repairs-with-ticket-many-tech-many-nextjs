@@ -62,7 +62,7 @@ export function TechnicianTable({techs}: Props) {
                                 <Button variant="indigo" type="button" size="sm" className="m-2">
                                     <Link href={`/technicians/${tech.id}/detail`}>Detail</Link>
                                 </Button>
-                                <DeleteResourceButton<TechnicianResponse> name={tech.name} path={`/technicians/${tech.id}/delete`} backToList="/technicians"/>
+                                <DeleteResourceButton<TechnicianResponse> name={tech.name} path={`/api/technicians/${tech.id}`} backToList="/technicians"/>
                                 <Button variant="edita" type="button" size="sm" className="m-2">
                                     <Link href={`/technicians/${tech.id}/edit`}>Edit</Link>
                                 </Button>

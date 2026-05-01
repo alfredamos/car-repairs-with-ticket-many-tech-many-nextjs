@@ -53,7 +53,7 @@ export default function LoginForm(){
                     Login Form
                 </h4>
                 <Separator className="mt-4 mb-4"/>
-                <InputWithLabel<LoginUser> fieldTitle="Email" type="email" nameInSchema="email" className={`mb-2}`}/>
+                <InputWithLabel<LoginUser> fieldTitle="Email" type="email" nameInSchema="email" className="mb-2 dark:text-white"/>
                 <InputWithLabel<LoginUser> fieldTitle="Password" type="password" nameInSchema="password" className="mb-2 dark:text-white" />
                 <Separator className="mt-4"/>
                 <div className="flex items-center justify-between gap-2 mt-4">

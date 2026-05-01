@@ -4,6 +4,7 @@ import {TechnicianResponse, toTechnicianResponse} from "@/types/technicianResp.m
 import {prisma} from "@/app/db/prisma.db";
 import catchError from "http-errors";
 import {StatusCodes} from "http-status-codes";
+import {ResponseMessage} from "@/utils/responseMessage";
 
 class TechService implements ITechService {
     async createTechnician(request: TechnicianUncheckedCreateInput): Promise<TechnicianResponse> {
@@ -14,16 +15,15 @@ class TechService implements ITechService {
         return toTechnicianResponse(tech);
     }
 
-    async deleteTechnicianById(id: string): Promise<TechnicianResponse> {
+    async deleteTechnicianById(id: string): Promise<ResponseMessage> {
         //----> Check for existence of tech with the giving id.
-        await this.getOneTech(id);
+        const tech = await this.getOneTech(id);
 
         //----> Delete the tech with the giving id.
-        const deletedTech = await prisma.technician.delete({where: {id}, include: {user: true}});
-        await prisma.user.delete({where: {id : deletedTech.userId}})
+        await prisma.user.delete({where: {id : tech.userId}})
 
         //----> Send back response.
-        return toTechnicianResponse(deletedTech);
+        return new ResponseMessage("Tech with the related user deleted successfully", "success", StatusCodes.OK)
     }
 
     async editTechnicianById(id: string, request: TechnicianUncheckedUpdateInput): Promise<TechnicianResponse> {

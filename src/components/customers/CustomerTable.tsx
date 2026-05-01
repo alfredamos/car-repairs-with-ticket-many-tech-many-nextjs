@@ -64,7 +64,7 @@ export function CustomerTable({customers}:Props) {
                                 <Button variant="indigo" type="button" size="sm" className="m-2">
                                     <Link href={`/customers/${customer.id}/detail`}>Detail</Link>
                                 </Button>
-                                <DeleteResourceButton<CustomerResponse> name={customer.name} path={`/customers/${customer.id}/delete`} backToList="/customers"/>
+                                <DeleteResourceButton<CustomerResponse> name={customer.name} path={`/api/customers/${customer.id}`} backToList="/customers"/>
                                 <Button variant="edita" type="button" size="sm" className="m-2">
                                     <Link href={`/customers/${customer.id}/edit`}>Edit</Link>
                                 </Button>

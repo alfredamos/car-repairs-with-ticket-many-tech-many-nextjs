@@ -1,10 +1,11 @@
-import { CustomerUncheckedCreateInput, CustomerUncheckedUpdateInput } from "@/generated/prisma/models";
+import {CustomerUncheckedCreateInput, CustomerUncheckedUpdateInput} from "@/generated/prisma/models";
 import {ICustomerService} from "@/services/ICustomer.service";
 import {CustomerResponse, toCustomerResponse} from "@/types/customerResp.model";
 import {prisma} from "@/app/db/prisma.db";
 import {CustomerWithUser} from "@/types/customerWithUser.model";
 import catchError from "http-errors";
 import {StatusCodes} from "http-status-codes";
+import {ResponseMessage} from "@/utils/responseMessage";
 
 class CustomerService implements ICustomerService {
     async changeStatus(id: string): Promise<CustomerResponse> {
@@ -30,16 +31,15 @@ class CustomerService implements ICustomerService {
 
     }
 
-    async deleteCustomerById(id: string): Promise<CustomerResponse> {
+    async deleteCustomerById(id: string): Promise<ResponseMessage> {
         //----> Check for existence of customer with the giving id.
-        await this.getOneCustomer(id);
+        const customer = await this.getOneCustomer(id);
 
         //----> Delete the customer with the giving id.
-        const deletedCustomer = await prisma.customer.delete({where: {id}, include: {user: true}});
-        await prisma.user.delete({where: {id : deletedCustomer.userId}})
+        await prisma.user.delete({where: {id : customer.userId}})
 
         //----> Send back the response.
-        return toCustomerResponse(deletedCustomer as CustomerWithUser);
+        return new ResponseMessage("User with the associated customer deleted successfully", "success", StatusCodes.OK)
     }
 
     async editCustomerById(id: string, request: CustomerUncheckedUpdateInput): Promise<CustomerResponse> {

@@ -42,9 +42,10 @@ export default function UserTable({ users }: Props) {
                         <TableHead>Image</TableHead>
                         <TableHead>name</TableHead>
                         <TableHead>Email</TableHead>
-                        <TableHead className="text-right">Phone</TableHead>
-                        <TableHead className="text-right">Role</TableHead>
-                        <TableHead className="text-right">Gender</TableHead>
+                        <TableHead>Phone</TableHead>
+                        <TableHead>Role</TableHead>
+                        <TableHead>Gender</TableHead>
+                        <TableHead>UserType</TableHead>
                         <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -61,9 +62,10 @@ export default function UserTable({ users }: Props) {
                             </TableCell>
                             <TableCell>{user.name}</TableCell>
                             <TableCell>{user.email}</TableCell>
-                            <TableCell className="text-right">{user.phone}</TableCell>
-                            <TableCell className="text-right">{user.role}</TableCell>
-                            <TableCell className="text-right">{user.gender}</TableCell>
+                            <TableCell>{user.phone}</TableCell>
+                            <TableCell>{user.role}</TableCell>
+                            <TableCell>{user.gender}</TableCell>
+                            <TableCell>{user.userType}</TableCell>
                             <TableCell className="w-1/3">
                                 <Button variant="indigo" type="button" size="sm" className="m-2">
                                     <Link href={`/users/${user.id}/detail`}>Detail</Link>
