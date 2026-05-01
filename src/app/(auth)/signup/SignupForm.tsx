@@ -15,7 +15,7 @@ import {Gender, Role, UserType} from "@/generated/prisma/enums";
 export default function SignupForm() {
     async function onSubmit(values: SignupUser) {
         const newUser = await signupUser(values);
-        redirect(newUser.userType === UserType.Customer ? `/customers/` : "/admin/login")
+        redirect(newUser.userType === UserType.Customer ? `/customers/add/${newUser.id}/` : `/technicians/add/${newUser.id}/`)
     }
 
     const defaultValues: SignupUser = {
@@ -26,7 +26,7 @@ export default function SignupForm() {
         phone: "",
         image: "",
         gender: Gender.Male,
-        dateOfBirth: new Date().toISOString().split("T")[0], // Set default date to today in YYYY-MM-DD format
+        dateOfBirth: new Date().toISOString().split("T")[0], // Set default date today in YYYY-MM-DD format
         userType: UserType.Customer,
         role: Role.User,
     }

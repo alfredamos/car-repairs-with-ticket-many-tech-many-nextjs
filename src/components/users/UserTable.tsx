@@ -70,7 +70,7 @@ export default function UserTable({ users }: Props) {
                                 <Button variant="indigo" type="button" size="sm" className="m-2">
                                     <Link href={`/users/${user.id}/detail`}>Detail</Link>
                                 </Button>
-                                <DeleteUserButton name={user.name} path={`/users/${user.id}/delete`}/>
+                                <DeleteUserButton name={user.name} path={`/api/users/${user.id}`}/>
                                 <ChangeUserRoleActionButton user={user as unknown as User}/>
                                 <Button variant="back" type="button" size="sm" className="m-2">
                                     <Link href={user.userType === UserType.Technician ? `/assign-tickets/by-user-id/${user.id}` : `/tickets/by-user-id/${user.id}`}>Tickets</Link>
