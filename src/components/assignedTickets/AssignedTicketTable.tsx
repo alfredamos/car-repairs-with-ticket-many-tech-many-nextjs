@@ -35,8 +35,6 @@ export default function AssignedTicketTable({ tickets}: Props) {
                 </Button>
             </div>
             <Separator className="mb-2 mt-4"/>
-            {/*<SearchTickets path="/tickets" />*/}
-            <Separator className="mb-2 mt-2"/>
             <Table className="mt-5">
                 <TableCaption>A list of Car-repair-shop assigned tickets.</TableCaption>
                 <TableHeader>

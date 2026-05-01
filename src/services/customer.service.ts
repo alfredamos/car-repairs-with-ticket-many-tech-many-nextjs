@@ -36,6 +36,7 @@ class CustomerService implements ICustomerService {
 
         //----> Delete the customer with the giving id.
         const deletedCustomer = await prisma.customer.delete({where: {id}, include: {user: true}});
+        await prisma.user.delete({where: {id : deletedCustomer.userId}})
 
         //----> Send back the response.
         return toCustomerResponse(deletedCustomer as CustomerWithUser);

@@ -10,7 +10,6 @@ import {
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Separator} from "@/components/ui/separator";
-import SearchUsers from "./SearchResources";
 import { DeleteUserButton } from "./DeleteUserButton";
 import { ChangeUserRoleActionButton } from "./ChangeUserRoleActionButton";
 import {UserDto} from "@/types/userDto.model";
@@ -36,8 +35,6 @@ export default function UserTable({ users }: Props) {
                 </Button>
             </div>
             <Separator className="mb-2 mt-4"/>
-            <SearchUsers path="/users" />
-            <Separator className="mb-2 mt-2"/>
             <Table className="mt-5">
                 <TableCaption>A list of Car-repair-shop users.</TableCaption>
                 <TableHeader>

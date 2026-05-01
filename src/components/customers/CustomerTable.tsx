@@ -3,7 +3,6 @@ import {CustomerResponse} from "@/types/customerResp.model";
 import {formattedDate} from "@/app/utils/formattedDate";
 import {Separator} from "@/components/ui/separator";
 import {Button} from "@/components/ui/button";
-import SearchUsers from "@/components/users/SearchResources";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {DeleteResourceButton} from "@/components/DeleteResourceButton";
 import {ChangeCustomerStatusButton} from "@/components/customers/ChangeCustomerStatus";
@@ -28,8 +27,6 @@ export function CustomerTable({customers}:Props) {
                 </Button>
             </div>
             <Separator className="mb-2 mt-4"/>
-            <SearchUsers path="/customers" />
-            <Separator className="mb-2 mt-2"/>
             <Table className="mt-5">
                 <TableCaption>A list of Car-repair-shop customers.</TableCaption>
                 <TableHeader>

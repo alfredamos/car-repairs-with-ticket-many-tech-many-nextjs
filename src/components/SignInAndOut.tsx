@@ -16,6 +16,7 @@ import {redirect} from "next/navigation";
 import {useApiClient} from "@/hooks/useApiClient";
 import {Method} from "@/types/method.model";
 import {emptyUserSession} from "@/utils/emptyUserSession";
+import {UserType} from "@/generated/prisma/enums";
 
 export default function SignInAndOut() {
     const {authSession, setAuthSession} = useAuthContext();
@@ -54,8 +55,7 @@ export default function SignInAndOut() {
                   </NavigationMenuItem>) : ""}
 
                    <NavigationMenuItem className="hover:bg-black hover:text-white focus:outline-none gap-2 px-4 pt-1 pb-2 rounded-md">
-                       <MenuDropdown items={getAllSettingItems(authSession?.id as string, isAdmin)} title="Settings" subTitle="My Account" />
-
+                       <MenuDropdown items={getAllSettingItems(authSession?.id as string, authSession?.userType as UserType)} title="Settings" subTitle="My Account" />
                    </NavigationMenuItem>
                    <NavigationMenuItem>
                        <form onSubmit={(event) => logoutUserAction(event)}>

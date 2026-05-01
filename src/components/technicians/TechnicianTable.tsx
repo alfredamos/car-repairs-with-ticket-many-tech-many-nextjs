@@ -2,7 +2,6 @@ import {TechnicianResponse} from "@/types/technicianResp.model";
 import {Separator} from "@/components/ui/separator";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import SearchUsers from "@/components/users/SearchResources";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {DeleteResourceButton} from "@/components/DeleteResourceButton";
 import {formattedDate} from "@/app/utils/formattedDate";
@@ -28,8 +27,6 @@ export function TechnicianTable({techs}: Props) {
                 </Button>
             </div>
             <Separator className="mb-2 mt-4"/>
-            <SearchUsers path="/technicians" />
-            <Separator className="mb-2 mt-2"/>
             <Table className="mt-5">
                 <TableCaption>A list of Car-repair-shop technicians.</TableCaption>
                 <TableHeader>

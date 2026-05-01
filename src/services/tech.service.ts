@@ -20,6 +20,7 @@ class TechService implements ITechService {
 
         //----> Delete the tech with the giving id.
         const deletedTech = await prisma.technician.delete({where: {id}, include: {user: true}});
+        await prisma.user.delete({where: {id : deletedTech.userId}})
 
         //----> Send back response.
         return toTechnicianResponse(deletedTech);
