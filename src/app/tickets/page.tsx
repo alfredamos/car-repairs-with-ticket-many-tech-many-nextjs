@@ -4,7 +4,7 @@ import {useAuth} from "@/hooks/useAuth";
 
 export default async function TicketListPage(){
     //----> Get the user session.
-    const {isAdmin} = await useAuth();
+    const {isAdmin, hasAdmin} = await useAuth();
 
     //----> Check if the user is an admin or owner.
     if (!isAdmin()) {
@@ -15,6 +15,6 @@ export default async function TicketListPage(){
     const tickets = await getAllTickets();
 
     return (
-        <TicketTable tickets={tickets}/>
+        <TicketTable tickets={tickets} isAdmin={hasAdmin}/>
     );
 }

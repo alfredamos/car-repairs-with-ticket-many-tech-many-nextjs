@@ -8,7 +8,7 @@ export default async function TicketsByUserIdPage({params}:{params: Promise<{use
     const {userId} = await params;
 
     //----> Get the user session.
-    const {isOwnerOrAdmin} = await useAuth();
+    const {isOwnerOrAdmin, hasAdmin} = await useAuth();
 
     //----> Check if the user is an admin or owner.
     if (!isOwnerOrAdmin(userId)) {
@@ -22,6 +22,6 @@ export default async function TicketsByUserIdPage({params}:{params: Promise<{use
     const tickets = await getTicketsByCustomerId(customer.id)
 
     return (
-        <TicketTable tickets={tickets}/>
+        <TicketTable tickets={tickets} isAdmin={hasAdmin}/>
     );
 }

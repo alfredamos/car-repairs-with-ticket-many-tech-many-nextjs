@@ -2,12 +2,14 @@ import {Button} from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import {TicketResponse} from "@/types/ticketResponse.model";
+import {BackButton} from "@/components/tickets/BackButton";
 
 type Props = {
+    isAdmin: boolean;
     ticket: TicketResponse;
 }
 
-export function TicketCard({ ticket}: Props) {
+export function TicketCard({ isAdmin, ticket}: Props) {
     return (
         <div className="flex flex-col max-w-sm mx-auto my-auto mt-10 ring-2 ring-gray-300 dark:text-gray-400 dark:ring-gray-600 p-2 rounded-t-md mb-10 shadow-xl">
             <div className="flex flex-col items-center md:flex-row md:justify-between h-20 m-1">
@@ -40,12 +42,11 @@ export function TicketCard({ ticket}: Props) {
                 </div>
                 <Separator className="h-px my-4 bg-gray-200 border-0"/>
                 <div className="flex flex-col items-center gap-2 md:flex-row md:justify-between h-full mb-5 mt-5">
-                    <Button variant="indigo" size="lg" className="w-full md:flex-1" asChild>
-                        <Link href="/tickets">Back</Link>
-                    </Button>
-                    <Button variant="back" size="lg" className="w-full md:flex-1" asChild>
+                   <BackButton isAdmin={isAdmin}/>
+                    {isAdmin && ( <Button variant="back" size="lg" className="w-full md:flex-1" asChild>
                         <Link href={`/tickets/${ticket.id}/edit`}>Edit</Link>
-                    </Button>
+                    </Button>)}
+
                 </div>
             </div>
 

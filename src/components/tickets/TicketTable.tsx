@@ -14,10 +14,11 @@ import {TicketResponse} from "@/types/ticketResponse.model";
 import {DeleteResourceButton} from "@/components/DeleteResourceButton";
 
 type Props = {
+    isAdmin: boolean;
     tickets: TicketResponse[];
 }
 
-export default function TicketTable({ tickets}: Props) {
+export default function TicketTable({ isAdmin, tickets}: Props) {
     //----> Check for empty array of tickets.
     if (tickets?.length === 0) {
         return <div className="h-dvh flex justify-center items-center"><h1 className="font-bold p-10 bg-red-200 ring-1 ring-red-200 rounded-lg shadow-lg text-black">There are no tickets to display at this time!</h1></div>
@@ -58,11 +59,15 @@ export default function TicketTable({ tickets}: Props) {
                                 <Button variant="indigo" type="button" size="sm" className="m-2">
                                     <Link href={`/tickets/${ticket.id}/detail`}>Detail</Link>
                                 </Button>
+                                {isAdmin && (
+                                    <>
+                                        <Button variant="back" type="button" size="sm" className="m-2">
+                                            <Link href={`/tickets/${ticket.id}/edit`}>Edit</Link>
+                                        </Button>
+                                        <DeleteResourceButton<TicketResponse> name={ticket.title} path={`/api/tickets/${ticket.id}`} backToList="/tickets"/>
+                                    </>
+                                )}
 
-                                <Button variant="back" type="button" size="sm" className="m-2">
-                                    <Link href={`/tickets/${ticket.id}/edit`}>Edit</Link>
-                                </Button>
-                                <DeleteResourceButton<TicketResponse> name={ticket.title} path={`/api/tickets/${ticket.id}`} backToList="/tickets"/>
                             </TableCell>
                         </TableRow>
                     ))}

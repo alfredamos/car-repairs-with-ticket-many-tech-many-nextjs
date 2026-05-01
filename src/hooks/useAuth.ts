@@ -2,6 +2,7 @@ import {authService} from "@/services/authService.service";
 
 export async function useAuth() {
     const session = await authService.getUserSession();
+    const hasAdmin = session?.isAdmin;
 
     function isAuthenticated() {
         return !!session;
@@ -24,5 +25,6 @@ export async function useAuth() {
         isAdmin,
         isOwner,
         isOwnerOrAdmin,
+        hasAdmin
     }
 }
