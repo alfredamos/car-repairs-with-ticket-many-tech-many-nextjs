@@ -1,5 +1,11 @@
-export default function AssignedTicketListPage(){
+import {getAllAssignedTickets} from "@/app/actions/assign-ticket.action";
+import AssignedTicketTable from "@/components/assignedTickets/AssignedTicketTable";
+
+export default async function AssignedTicketListPage(){
+    //----> Fetch all assigned tickets.
+    const tickets = await getAllAssignedTickets();
+
     return (
-        <div>Assigned tickets page!</div>
+        <AssignedTicketTable tickets={tickets}/>
     );
 }

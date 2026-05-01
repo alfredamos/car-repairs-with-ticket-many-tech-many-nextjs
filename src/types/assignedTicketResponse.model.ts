@@ -54,7 +54,7 @@ export function toAssignedTicketResponse(assignTicketReq: AssignedTicketRequest)
         techName: assignTicketReq?.tech?.user?.name,
         techEmail: assignTicketReq?.tech?.user?.email,
         techPhone: assignTicketReq?.tech?.user?.phone,
-        techSpecialty: assignTicketReq?.tech?.speciality,
+        techSpecialty: assignTicketReq?.tech?.specialty,
         techImage: assignTicketReq?.tech?.user?.image
     }
 }

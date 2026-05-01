@@ -43,6 +43,16 @@ export async function getTechById(id: string){
     }
 }
 
+export async function getTechByUserId(userId: string){
+    try {
+        //----> Fetch tech by user id.
+        return await techService.getTechnicianByUserId(userId);
+    }catch (err){
+        const error = err as Error;
+        throw new Error(error?.message, {cause: err});
+    }
+}
+
 export async function getAllTechs(){
     try {
         //----> Fetch all techs.

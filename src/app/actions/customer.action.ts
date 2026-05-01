@@ -43,6 +43,16 @@ export async function getCustomerById(id: string) {
     }
 }
 
+export async function getCustomerByUserId(userId: string) {
+    try {
+        //----> Fetch the customer with the giving user id in db.
+        return await customerService.getCustomerByUserId(userId);
+    }catch (err){
+        const error = err as Error;
+        throw new Error(error?.message, {cause: err});
+    }
+}
+
 export async function getActiveCustomers(){
     try {
         //----> Fetch all customers from db.

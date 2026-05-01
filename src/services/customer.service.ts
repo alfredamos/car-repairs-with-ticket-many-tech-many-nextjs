@@ -76,6 +76,14 @@ class CustomerService implements ICustomerService {
 
     }
 
+    async getCustomerByUserId(userId: string): Promise<CustomerResponse> {
+        //----> Fetch customer by user-id.
+        const customer = await prisma.customer.findUnique({where: {userId}, include: {user: true}});
+
+        //----> Send back response.
+        return toCustomerResponse(customer as CustomerWithUser);
+    }
+
     async getInactiveCustomers(): Promise<CustomerResponse[]> {
         //----> Fetch all customers.
         const customers = await prisma.customer.findMany({where: {active: false}, include: {user: true}});

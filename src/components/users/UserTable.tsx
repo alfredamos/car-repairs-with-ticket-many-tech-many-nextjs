@@ -14,7 +14,7 @@ import SearchUsers from "./SearchResources";
 import { DeleteUserButton } from "./DeleteUserButton";
 import { ChangeUserRoleActionButton } from "./ChangeUserRoleActionButton";
 import {UserDto} from "@/types/userDto.model";
-import {User} from "@/generated/prisma/client";
+import {User, UserType} from "@/generated/prisma/client";
 
 type Props = {
     users: UserDto[]
@@ -74,7 +74,7 @@ export default function UserTable({ users }: Props) {
                                 <DeleteUserButton name={user.name} path={`/users/${user.id}/delete`}/>
                                 <ChangeUserRoleActionButton user={user as unknown as User}/>
                                 <Button variant="back" type="button" size="sm" className="m-2">
-                                    <Link href={`/assign-tickets/by-user-id/${user.id}`}>Tickets</Link>
+                                    <Link href={user.userType === UserType.Technician ? `/assign-tickets/by-user-id/${user.id}` : `/tickets/by-user-id/${user.id}`}>Tickets</Link>
                                 </Button>                            </TableCell>
                         </TableRow>
                     ))}

@@ -73,7 +73,7 @@ export function CustomerTable({customers}:Props) {
                                 </Button>
                                 <ChangeCustomerStatusButton active={customer.active} customerId={customer.id}/>
                                 <Button variant="back" type="button" size="sm" className="m-2">
-                                    <Link href={`/assign-tickets/by-user-id/${customer.id}`}>Tickets</Link>
+                                    <Link href={`/tickets/by-customer-id/${customer.id}`}>Tickets</Link>
                                 </Button>                            </TableCell>
                         </TableRow>
                     ))}

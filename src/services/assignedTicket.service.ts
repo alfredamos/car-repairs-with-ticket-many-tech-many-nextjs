@@ -1,5 +1,5 @@
-import { Status } from "@/generated/prisma/enums";
-import { AssignedTicketUncheckedCreateInput, AssignedTicketUncheckedUpdateInput } from "@/generated/prisma/models";
+import {Status} from "@/generated/prisma/enums";
+import {AssignedTicketUncheckedCreateInput, AssignedTicketUncheckedUpdateInput} from "@/generated/prisma/models";
 import {IAssignedTicketService} from "@/services/IAssignedTicket.service";
 import {
     AssignedTicketRequest,
@@ -9,9 +9,19 @@ import {
 import {prisma} from "@/app/db/prisma.db";
 import catchError from "http-errors";
 import {StatusCodes} from "http-status-codes";
+import {authService} from "@/services/authService.service";
 
 class AssignedTicketService implements IAssignedTicketService {
     async createAssignedTicket(request: AssignedTicketUncheckedCreateInput): Promise<AssignedTicketResponse> {
+        //----> Get user session.
+        const session = await authService.getUserSession();
+
+        //----> Only admin can assign ticket.
+        if (!session.isAdmin) throw catchError(StatusCodes.FORBIDDEN, "Only admin can assign ticket!");
+
+        //----> Assign ticket.
+        request.assignBy = session.name;
+
         //----> Insert the assigned ticket in db.
         const newTicket = await prisma.assignedTicket.create({data: {...request}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
@@ -28,7 +38,7 @@ class AssignedTicketService implements IAssignedTicketService {
         const status = assignedTicket.completed ? Status.Open : Status.Closed;
 
         //----> Update the assigned ticket.
-        const updatedAssignedTicket = await prisma.assignedTicket.update({where: {techId_ticketId: {techId, ticketId}}, data: {...assignedTicket, completed, status}});
+        const updatedAssignedTicket = await prisma.assignedTicket.update({where: {techId_ticketId: {techId, ticketId}}, data: {completed, status}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Send back response.
         return toAssignedTicketResponse(updatedAssignedTicket as AssignedTicketRequest);
@@ -39,7 +49,7 @@ class AssignedTicketService implements IAssignedTicketService {
         await this.getOneAssignedTicket(techId, ticketId);
 
         //----> Delete the assigned ticket with the giving ids techId and ticketId.
-        const deletedAssignedTicket = await prisma.assignedTicket.delete({where: {techId_ticketId: {techId, ticketId}}});
+        const deletedAssignedTicket = await prisma.assignedTicket.delete({where: {techId_ticketId: {techId, ticketId}}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Send back response.
         return toAssignedTicketResponse(deletedAssignedTicket as AssignedTicketRequest);
@@ -49,8 +59,11 @@ class AssignedTicketService implements IAssignedTicketService {
         //----> Check for existence of assigned ticket.
         await this.getOneAssignedTicket(techId, ticketId);
 
+        //----> Update the ticket status.
+        request.completed = request.status !== Status.Open;
+
         //----> Edit the assigned ticket.
-        const editedAssignedTicket = await prisma.assignedTicket.update({where: {techId_ticketId: {techId, ticketId}}, data: {...request}});
+        const editedAssignedTicket = await prisma.assignedTicket.update({where: {techId_ticketId: {techId, ticketId}}, data: {...request}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Send back response.
         return toAssignedTicketResponse(editedAssignedTicket as AssignedTicketRequest);
@@ -66,7 +79,7 @@ class AssignedTicketService implements IAssignedTicketService {
 
     async getAllAssignedTickets(): Promise<AssignedTicketResponse[]> {
         //----> Fetch all assigned tickets.
-        const assignedTickets = await prisma.assignedTicket.findMany({});
+        const assignedTickets = await prisma.assignedTicket.findMany({include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Send back response.
         return assignedTickets?.map(ticket => toAssignedTicketResponse(ticket as AssignedTicketRequest));
@@ -74,7 +87,7 @@ class AssignedTicketService implements IAssignedTicketService {
 
     async getAssignedTicketsByTechId(techId: string): Promise<AssignedTicketResponse[]> {
         //----> Fetch assigned tickets by techId.
-        const assignedTickets = await prisma.assignedTicket.findMany({where: {techId}});
+        const assignedTickets = await prisma.assignedTicket.findMany({where: {techId}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Send back response.
         return assignedTickets?.map(ticket => toAssignedTicketResponse(ticket as AssignedTicketRequest));
@@ -83,7 +96,7 @@ class AssignedTicketService implements IAssignedTicketService {
 
     async getAssignedTicketsByTicketId(ticketId: string): Promise<AssignedTicketResponse[]> {
         //----> Fetch assigned tickets by ticketId.
-        const assignedTickets = await prisma.assignedTicket.findMany({where: {ticketId}});
+        const assignedTickets = await prisma.assignedTicket.findMany({where: {ticketId}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Send back response.
         return assignedTickets?.map(ticket => toAssignedTicketResponse(ticket as AssignedTicketRequest));
@@ -91,7 +104,7 @@ class AssignedTicketService implements IAssignedTicketService {
 
     async getAssignedTicketsByStatus(status: Status): Promise<AssignedTicketResponse[]> {
         //----> Fetch all assigned tickets.
-        const assignedTickets = await prisma.assignedTicket.findMany({where: {status}});
+        const assignedTickets = await prisma.assignedTicket.findMany({where: {status}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Send back response.
         return assignedTickets?.map(ticket => toAssignedTicketResponse(ticket as AssignedTicketRequest));
@@ -99,7 +112,7 @@ class AssignedTicketService implements IAssignedTicketService {
 
     async getCompletedAssignedTickets(): Promise<AssignedTicketResponse[]> {
         //----> Fetch all assigned tickets.
-        const assignedTickets = await prisma.assignedTicket.findMany({where: {completed: true}});
+        const assignedTickets = await prisma.assignedTicket.findMany({where: {completed: true}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Send back response.
         return assignedTickets?.map(ticket => toAssignedTicketResponse(ticket as AssignedTicketRequest));
@@ -107,7 +120,7 @@ class AssignedTicketService implements IAssignedTicketService {
 
     async getIncompletedAssignedTickets(): Promise<AssignedTicketResponse[]> {
         //----> Fetch all assigned tickets.
-        const assignedTickets = await prisma.assignedTicket.findMany({where: {completed: false}});
+        const assignedTickets = await prisma.assignedTicket.findMany({where: {completed: false}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Send back response.
         return assignedTickets?.map(ticket => toAssignedTicketResponse(ticket as AssignedTicketRequest));
@@ -115,7 +128,7 @@ class AssignedTicketService implements IAssignedTicketService {
 
     private async getOneAssignedTicket(techId: string, ticketId: string){
         //----> Fetch the assigned ticket.
-        const assignedTicket = await prisma.assignedTicket.findUnique({where: {techId_ticketId: {ticketId, techId}}});
+        const assignedTicket = await prisma.assignedTicket.findUnique({where: {techId_ticketId: {ticketId, techId}}, include: {ticket: {include: {customer: {include: {user: true}}}}, tech: {include: {user: true}}}});
 
         //----> Check for null assigned ticket.
         if (!assignedTicket) throw catchError(StatusCodes.NOT_FOUND, "Assigned ticket is not found in db!");

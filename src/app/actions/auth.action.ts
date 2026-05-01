@@ -19,8 +19,8 @@ export async function changeUserPassword(data: ChangeUserPassword){
         //----> Send back response.
         return toResponseMessage(response);
     }catch (err){
-        const error = err as HttpError;
-        throw catchError(error?.statusCode, error?.message);
+        const error = err as Error;
+        throw new Error(error?.message, {cause: err});
     }
 }
 
@@ -32,8 +32,8 @@ export async function editUserProfile(data: EditUserProfile){
         //----> Send back response.
         return toResponseMessage(response);
     }catch (err){
-        const error = err as HttpError;
-        throw catchError(error?.statusCode, error?.message);
+        const error = err as Error;
+        throw new Error(error?.message, {cause: err});
     }
 }
 
@@ -42,8 +42,8 @@ export async function loginUser(data: LoginUser){
         //----> Login user and send back response.
         return await authService.loginUser(data)
     }catch (err){
-        const error = err as HttpError;
-        throw catchError(error?.statusCode, error?.message);
+        const error = err as Error;
+        throw new Error(error?.message, {cause: err});
     }
 }
 
@@ -53,9 +53,8 @@ export async function logoutUser(){
         await authService.logoutUser();
         redirect("/login");
     }catch (err){
-        console.log("In logout-action, error : ", err);
-        const error = err as HttpError;
-        throw catchError(error?.statusCode, error?.message);
+        const error = err as Error;
+        throw new Error(error?.message, {cause: err});
     }
 }
 
@@ -64,8 +63,8 @@ export async function getLoginUser(){
         //----> Get the current login user.
         return await authService.getCurrentUser();
     }catch (err){
-        const error = err as HttpError;
-        throw catchError(error?.statusCode, error?.message);
+        const error = err as Error;
+        throw new Error(error?.message, {cause: err});
     }
 }
 
@@ -74,8 +73,8 @@ export async function refreshUserToken(){
         //----> Refresh user token and send back response.
         return await authService.refreshUserToken();
     }catch (err){
-        const error = err as HttpError;
-        throw catchError(error?.statusCode, error?.message);
+        const error = err as Error;
+        throw new Error(error?.message, {cause: err});
     }
 }
 
@@ -87,8 +86,8 @@ export async function signupUser(data: SignupUser){
         //----> Send back response.
         return toResponseMessage(response)
     }catch (err){
-        const error = err as HttpError;
-        throw catchError(error?.statusCode, error?.message);
+        const error = err as Error;
+        throw new Error(error?.message, {cause: err});
     }
 }
 

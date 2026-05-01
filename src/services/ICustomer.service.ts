@@ -9,5 +9,6 @@ export interface ICustomerService{
     getActiveCustomers(): Promise<CustomerResponse[]>;
     getAllCustomers(): Promise<CustomerResponse[]>;
     getCustomerById(id: string): Promise<CustomerResponse>;
+    getCustomerByUserId(userId: string): Promise<CustomerResponse>
     getInactiveCustomers(): Promise<CustomerResponse[]>;
 }

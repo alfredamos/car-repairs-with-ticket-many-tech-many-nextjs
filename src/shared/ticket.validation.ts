@@ -10,9 +10,9 @@ export const ticketCreateSchema = z.object({
 export type TicketCreate = z.infer<typeof ticketCreateSchema>;
 
 export const ticketEditSchema = z.object({
-    id: z.string().min(1, { message: "Title cannot be empty." }),
+    id: z.string().min(1, { message: "Id cannot be empty." }),
     title: z.string().min(1, { message: "Title cannot be empty." }),
-    description: z.string().min(1, { message: "Notes cannot be empty." }),
+    description: z.string().min(1, { message: "Description cannot be empty." }),
     customerId: z.string().min(1, { message: "CustomerId cannot be empty." }),
 
 })
