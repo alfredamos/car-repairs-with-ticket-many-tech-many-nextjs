@@ -1,5 +1,9 @@
 const publicRoutes = [
    "/",
+    "/login",
+    "/logout",
+    "/refresh",
+    "/signup",
     "/api/auth/login",
     "/api/auth/logout",
     "/api/auth/refresh",

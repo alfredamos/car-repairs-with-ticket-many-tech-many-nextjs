@@ -1,7 +1,8 @@
+// proxy.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import {isPublicRoute} from "@/types/publicRoute";
 import {authService} from "@/services/authService.service";
+import {isPublicRoute} from "@/types/publicRoute";
 
 export async function proxy(request: NextRequest) {
     //----> Log the incoming request
@@ -11,7 +12,6 @@ export async function proxy(request: NextRequest) {
 
     //----> Exclude public routes.
     if (isPublicRoute(route)) {
-        console.log("In proxy, url : ", `${request?.nextUrl?.pathname}`);
         return NextResponse.next();
     }
 
@@ -28,16 +28,16 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
 }
 
+// Optional: Limit which paths the proxy runs on
 export const config = {
     matcher: [
-        // Match all request paths except for the ones starting with:
-        // - _next/static (static files)
-        // - _next/image (image optimization files)
-        // - favicon.ico (favicon file)
-        // - login or signup paths
-        // - files with common image extensions (.svg, .png, .jpg, .jpeg, .gif, .webp)
-        // - files with .css extension
-        // - the root path ("/" or empty string)
-        "/((?!^_next/static|_next/image|favicon.ico|login|signup|.*\\.(?:svg|png|jpg|jpeg|gif|webp|css)$|^$|^/$).*)",
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (internal routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         */
+        '/((?!api|_next/static|_next/image|favicon.ico).*)',
     ],
 };
