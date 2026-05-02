@@ -52,7 +52,7 @@ export function NavigationBar() {
 
     return (
        <>
-       <nav className="bg-gray-800 shadow-lg sticky top-0 bg-background z-10">
+       <nav className="bg-gray-800 shadow-lg sticky top-0 z-10">
            <div className="max-w-6xl mx-auto px-4">
                <div className="flex justify-between items-center">
                    {/*Logo*/}
@@ -126,7 +126,7 @@ export function NavigationBar() {
 
     {/*Mobile Menu (toggled by JavaScript/TypeScript)*/}
     <div
-           className={`md:hidden ${!isMenuOpen ? 'block' : isMenuOpen}`} >
+        className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
         <Link
             href="/"
             className="block py-2 px-4 text-sm hover:bg-gray-700 text-white"
